@@ -5,7 +5,7 @@ import fs from "fs";
 import { ROOT_DIRECTORY } from "../config";
 
 /**create a rule/schema for add new medicine */
-const createSceme = Joi.object({
+const createSchema = Joi.object({
     name: Joi.string().required(),
     stock: Joi.number().min(0).required(),
     price: Joi.number().min(1).required(),
@@ -14,7 +14,7 @@ const createSceme = Joi.object({
 })
 
 const createValidation = (req: Request, res: Response, next: NextFunction) => {
-    const validate = createSceme.validate(req.body)
+    const validate = createSchema.validate(req.body)
     if (validate.error) {
         /**delete current uploaded file */
         let fileName: string = req.file?.filename || ``
@@ -40,7 +40,7 @@ const createValidation = (req: Request, res: Response, next: NextFunction) => {
 }
 
 /**create a rule/scheme for update medicine */
-const updateSceme = Joi.object({
+const updateSchema = Joi.object({
     name: Joi.string().optional(),
     stock: Joi.number().min(0).optional(),
     price: Joi.number().min(1).optional(),
@@ -49,7 +49,7 @@ const updateSceme = Joi.object({
 })
 
 const updateValidation = (req: Request, res: Response, next: NextFunction) => {
-    const validate = updateSceme.validate(req.body)
+    const validate = updateSchema.validate(req.body)
     if (validate.error) {
          /**delete current uploaded file */
          let fileName: string = req.file?.filename || ``
